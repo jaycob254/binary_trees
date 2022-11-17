@@ -1,73 +1,62 @@
-#include <stdlib.h>
-
-#include <stdio.h>
-
 #include "binary_trees.h"
-
-
+int binary_int_depth(const binary_tree_t *tree);
+int is_perfect(const binary_tree_t *tree, int depth, int level);
 
 /**
-
- * main - Entry point
-
- *
-
- * Return: Always 0 (Success)
-
+ * binary_tree_is_perfect - Checks if binary tree is perfect
+ * @tree: pointer to root
+ * Return: 1 if perfect, 0 if not or tree is NULL
  */
 
-int main(void)
-
+int binary_tree_is_perfect(const binary_tree_t *tree)
 {
+	int depth;
 
-    binary_tree_t *root;
+	if (tree == NULL)
+		return (0);
+	depth = binary_int_depth(tree);
+	return (is_perfect(tree, depth, 0));
+}
 
-    int perfect;
+/**
+ * is_perfect - Recursive check for perfect binary tree
+ * @tree: pointer to root
+ * @depth: int max depth
+ * @level: int level to check leaves
+ * Return: 1 or 0
+ */
 
+int is_perfect(const binary_tree_t *tree, int depth, int level)
+{
+	if (tree == NULL)
+		return (0);
 
+	if (tree->left == NULL && tree->right == NULL)
+	{
+		if (depth == (level + 1))
+			return (1);
+		return (0);
+	}
+	if (tree->left == NULL || tree->right == NULL)
+		return (0);
+	return (is_perfect(tree->left, depth, level + 1)
+		&& is_perfect(tree->right, depth, level + 1));
+}
 
-    root = binary_tree_node(NULL, 98);
+/**
+ * binary_int_depth - Measures max depth of binary tree
+ * @tree: pointer to root
+ * Return: int depth
+ */
 
-    root->left = binary_tree_node(root, 12);
+int binary_int_depth(const binary_tree_t *tree)
+{
+	int depth = 0;
 
-    root->right = binary_tree_node(root, 402);
-
-    binary_tree_insert_right(root->left, 54);
-
-    binary_tree_insert_right(root, 128);
-
-    root->left->left = binary_tree_node(root->left, 10);
-
-    root->right->left = binary_tree_node(root->right, 10);
-
-
-
-    binary_tree_print(root);
-
-    perfect = binary_tree_is_perfect(root);
-
-    printf("Perfect: %d\n\n", perfect);
-
-
-
-    root->right->right->left = binary_tree_node(root->right->right, 10);
-
-    binary_tree_print(root);
-
-    perfect = binary_tree_is_perfect(root);
-
-    printf("Perfect: %d\n\n", perfect);
-
-
-
-    root->right->right->right = binary_tree_node(root->right->right, 10);
-
-    binary_tree_print(root);
-
-    perfect = binary_tree_is_perfect(root);
-
-    printf("Perfect: %d\n", perfect);
-
-    return (0);
-
+	while (tree != NULL)
+	{
+		depth++;
+		tree = tree->left;
+	}
+	return (depth);
 }
