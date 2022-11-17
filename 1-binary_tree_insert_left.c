@@ -3,8 +3,8 @@
 /**
  * binary_tree_insert_left - Function to insert a node as the left-child
  *
- * parent: Parent node
- * value: Integer to be set
+ * @parent: Parent node
+ * @value: Integer to be set
  *
  * Return: Always pointer
  */
