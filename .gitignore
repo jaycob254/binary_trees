@@ -1,0 +1,4 @@
+*.
+*.c.swp
+*main.c
+.vscode
